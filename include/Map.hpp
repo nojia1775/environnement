@@ -44,6 +44,7 @@ class	Map
 		t_cell_statut				getCellStatut(const unsigned int& x, const unsigned int& y) const;
 		void					killEntity(const unsigned int& x, const unsigned int& y, const std::string& type);
 		const std::vector<Entity>&		getEntities(void) const;
+		void					genMap(void);
 
 		class					TooMuchEntities : public std::exception
 		{

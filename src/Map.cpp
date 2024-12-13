@@ -111,4 +111,23 @@ void	Map::killEntity(const unsigned int& x, const unsigned int& y, const std::st
 
 const std::vector<Entity>&	Map::getEntities(void) const { return _entities; }
 
+void	Map::genMap(void)
+{
+	for (int i = 0 ; i < HEIGHT ; i++)
+	{
+		for (int j = 0 ; j < WIDTH ; j++)
+			_map[i][j] = ' ';
+	}
+	for (std::vector<Entity>::const_iterator it = _entities.begin() ; it != _entities.end() ; ++it)
+	{
+		if (it->getType() == "carnivore")
+			_map[it->getY()][it->getX()] = 'C';
+		else if (it->getType() == "herbivore")
+			_map[it->getY()][it->getX()] = 'H';
+		else if (it->getType() == "plant")
+			_map[it->getY()][it->getX()] = 'P';
+	}
+	this->print();
+}
+
 const char	*Map::TooMuchEntities::what(void) const throw() { return "Too much entities for the map"; }

@@ -5,6 +5,8 @@
 # include <iostream>
 # include <vector>
 # include "Map.hpp"
+# include <cmath>
+# include <cstdlib>
 
 class Map;
 
@@ -12,7 +14,6 @@ class	Entity
 {
 	protected:
 		const std::string	_type;
-		unsigned int		_pv;
 		unsigned int		_hunger;
 		unsigned int		_age;
 		unsigned int		_view;
@@ -33,6 +34,13 @@ class	Entity
 		unsigned int		getX(void) const;
 		unsigned int		getY(void) const;
 		std::string		getType(void) const;
+		void			getNearestEntity(const std::string& type, unsigned int& x, unsigned int& y, const Map& map);
+		void			randomMove(const Map& map);
+
+		class			NoEntityAround : public std::exception
+		{
+			const char	*what(void) const throw();
+		};
 };
 
 #endif
