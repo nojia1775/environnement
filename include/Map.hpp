@@ -1,55 +1,42 @@
 #ifndef MAP_HPP
 
 # define MAP_HPP
-# define WIDTH 20
-# define HEIGHT 10
 
-# include <iostream>
-# include "Herbivore.hpp"
-# include "Carnivore.hpp"
-# include "Plant.hpp"
-# include <ctime>
-# include <cstdlib>
-
-class Entity;
-
-typedef enum	e_cell_statut
-{
-	VOID,
-	PLANT,
-	HERBIVORE,
-	CARNIVORE
-}		t_cell_statut;
+# include "Environnement.hpp"
+# include "Entity.hpp"
 
 class	Map
 {
 	private:
-		std::vector<std::vector<char>>		_map;
-		unsigned int				_nbr_herbivores;
-		unsigned int				_nbr_carnivores;
-		unsigned int				_nbr_plants;
-		std::vector<Entity>			_entities;
+		std::array<std::array<char, WIDTH>, HEIGHT>		_map;
+		size_t							_carnivores;
+		size_t							_herbivores;
+		size_t							_plants;
+		size_t							_organicMatters;
+		std::vector<std::unique_ptr<Entity>>			_entities;
+		bool							_running = true;
 
 	public:
-							Map(void);
-							~Map(void);
+									Map(void);
+									~Map(void);
 
-							Map(const unsigned int& herbivores, const unsigned int& carnivore, const unsigned int& plants);
+									Map(const unsigned int& carnivores, const unsigned int& herbivores, const unsigned int& plants);
+									Map(const Map& other);
+		Map&							operator=(const Map& other);
 
-		unsigned int				getHerbivores(void) const;
-		unsigned int				getCarnivores(void) const;
-		unsigned int				getPlants(void) const;
-		void					print(void) const;
-		const std::vector<std::vector<char>>&	getMap(void) const;
-		t_cell_statut				getCellStatut(const unsigned int& x, const unsigned int& y) const;
-		void					killEntity(const unsigned int& x, const unsigned int& y, const std::string& type);
-		const std::vector<Entity>&		getEntities(void) const;
-		void					genMap(void);
-
-		class					TooMuchEntities : public std::exception
-		{
-							const char	*what(void) const throw();
-		};
+		void							print(void) const;
+		void							setEntities(void);
+		void							suppAnimals(void);
+		void							nextGen(void);
+		void							setMap(void);
+		const size_t&						getCarnivores(void) const;
+		const size_t&						getHerbivores(void) const;
+		const size_t&						getPlants(void) const;
+		const size_t&						getOrganicMatters(void) const;
+		const std::array<std::array<char, WIDTH>, HEIGHT>&	getMap(void) const;
+		const std::vector<std::unique_ptr<Entity>>&		getEntities(void) const;
+		bool							isRunning(void) const;
+		void							stop(void);
 };
 
 #endif

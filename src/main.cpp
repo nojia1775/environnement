@@ -1,10 +1,17 @@
-#include <iostream>
-#include <array>
+#include "../include/Environnement.hpp"
+#include "../include/Map.hpp"
+#include "../include/Herbivore.hpp"
 
 int	main(void)
 {
-	std::array<std::array<int, 3>, 3> arr;
-	std::array<int, 3> test = arr.at(1);
-	std::cout << test[0] << "\n";
+	Map map(0, 1, 5);
+	map.setEntities();
+	map.setMap();
+	while (map.isRunning())
+	{
+		map.print();
+		sleep(1);
+		map.nextGen();
+	}
 	return 0;
 }
